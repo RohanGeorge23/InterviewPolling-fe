@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import Tag from './Tag';
 import './student.css';
+import LivePollResults from './LivePollResults';
 
-const socket = io('http://localhost:3000'); // Adjust backend URL if needed
+const socket = io('http://localhost:3000'); 
 
 function Student() {
   const [name, setName] = useState('');
@@ -14,20 +15,20 @@ function Student() {
   const [responses, setResponses] = useState({});
 
   useEffect(() => {
-    // Setup socket listeners as soon as component mounts
+   
     socket.on('new-poll', (pollData) => {
       console.log('Received new poll:', pollData); // Debug log
       setPoll(pollData);
       setSubmitted(false);
       setSelectedOption('');
+      setResponses({});
     });
 
     socket.on('poll-results', (data) => {
       setResponses(data);
     });
 
-    // Emit the active poll for this student upon connection
-    socket.emit('request-poll'); // New event to request the active poll
+    socket.emit('request-poll'); 
 
     return () => {
       socket.off('new-poll');
@@ -47,13 +48,15 @@ function Student() {
       <div className='stu'>
         <Tag />
         <h2 className='h2'>Let's Get Started</h2>
-        <p className='p'>If you’re a student, you’ll be able to submit your answers, participate in live polls, and see how your responses compare with your classmates.</p>
-        
+        <p className='p'>
+          If you’re a student, you’ll be able to submit your answers, participate in live polls, and see how your responses compare with your classmates.
+        </p>
+
         {!studentId ? (
           <div className='studName'>
             <p className='h3'>Enter your Name</p>
             <input
-              type="text"
+              type='text'
               className='inputt'
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -76,9 +79,9 @@ function Student() {
                   {poll.options.map((opt, index) => (
                     <div key={index}>
                       <input
-                        type="radio"
+                        type='radio'
                         id={`option-${index}`}
-                        name="poll"
+                        name='poll'
                         value={opt}
                         onChange={(e) => setSelectedOption(e.target.value)}
                       />
@@ -88,8 +91,14 @@ function Student() {
                   <button onClick={submitAnswer}>Submit Answer</button>
                 </div>
               ) : (
-                <div>
-                  <h3>Wait for Teacher to ask Questions...</h3>
+                <div className='stu-stplit'>
+                  <h3>Poll Results:</h3>
+                  <LivePollResults
+                    question={poll.question}
+                    options={poll.options}
+                    responses={responses}
+                  />
+                  <p>Waiting for Teacher to ask another question...</p>
                 </div>
               )
             ) : (

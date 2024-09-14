@@ -2,7 +2,7 @@ import React from 'react'
 import '../App.css'
 
 function Tag() {
-  return ( /* Light grey background */
+  return ( 
     <span className='intspan'>Intervue Poll</span>
 
   )

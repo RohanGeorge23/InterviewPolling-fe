@@ -4,16 +4,15 @@ import LivePollResults from './LivePollResults';
 import Tag from './Tag';
 import './teacher.css';
 
-const socket = io('http://localhost:3000'); // Adjust backend URL if needed
+const socket = io('http://localhost:3000');
 
 function Teacher() {
   const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState(['', '']); // Start with 2 default options
+  const [options, setOptions] = useState(['', '']);
   const [responses, setResponses] = useState({});
   const [pollActive, setPollActive] = useState(false);
 
   useEffect(() => {
-    // Listen for poll results and new polls
     socket.on('poll-results', (data) => {
       setResponses(data);
     });
@@ -22,17 +21,15 @@ function Teacher() {
       setPollActive(false);
     });
 
-    // Listen for a new poll being created
     socket.on('new-poll', (poll) => {
-      console.log('New poll created:', poll); // Debug log
+      console.log('New poll created:', poll); 
       setQuestion(poll.question);
       setOptions(poll.options);
-      setResponses({}); // Reset responses for the new poll
-      setPollActive(true); // Set poll active
+      setResponses({}); 
+      setPollActive(true); 
     });
 
     return () => {
-      // Clean up socket listeners on unmount
       socket.off('poll-results');
       socket.off('poll-closed');
       socket.off('new-poll');
@@ -47,26 +44,31 @@ function Teacher() {
         body: JSON.stringify({ question, options }),
       }).then((res) => {
         if (res.ok) {
-          setPollActive(true); // Keep poll active state
+          setPollActive(true); 
         }
       });
     }
   };
 
   const addOption = () => {
-    setOptions([...options, '']); // Add a new empty option
+    setOptions([...options, '']); 
   };
 
   const deleteOption = (index) => {
     const newOptions = options.filter((_, i) => i !== index);
-    setOptions(newOptions); // Update the state to remove the selected option
+    setOptions(newOptions); 
   };
 
   const resetPollCreation = () => {
-    setQuestion(''); // Reset question
-    setOptions(['', '']); // Reset options
-    setResponses({}); // Clear responses
-    setPollActive(false); // Set poll as inactive
+    setQuestion(''); 
+    setOptions(['', ''])
+    setResponses({}); 
+    setPollActive(false); //
+  };
+
+  const handleNewQuestion = () => {
+    resetPollCreation(); 
+    socket.emit('request-new-poll'); 
   };
 
   return (
@@ -85,8 +87,8 @@ function Teacher() {
               options={options}
               responses={responses}
             />
-            <button className='createC' onClick={resetPollCreation}>
-              + Ask Another Question
+            <button className='new-question' onClick={handleNewQuestion}>
+              + Ask New Question
             </button>
           </div>
         ) : (

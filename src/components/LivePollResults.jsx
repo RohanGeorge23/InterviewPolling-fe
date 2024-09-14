@@ -22,7 +22,6 @@ const LivePollResults = ({ question, options, responses }) => {
           <Bar dataKey="value" fill="#8884d8" label={({ value }) => `${((value / totalResponses) * 100).toFixed(0)}%`} />
         </BarChart>
       </ResponsiveContainer>
-      <button className="new-question-btn">+ Ask a new question</button>
     </div>
   );
 };
