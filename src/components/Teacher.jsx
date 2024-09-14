@@ -1,9 +1,8 @@
-// src/components/Teacher.js
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import LivePollResults from './LivePollResults';
 import Tag from './Tag';
-import './techer.css';
+import './teacher.css';
 
 const socket = io('http://localhost:3000'); // Adjust backend URL if needed
 
@@ -63,25 +62,39 @@ function Teacher() {
     setOptions(newOptions); // Update the state to remove the selected option
   };
 
+  const resetPollCreation = () => {
+    setQuestion(''); // Reset question
+    setOptions(['', '']); // Reset options
+    setResponses({}); // Clear responses
+    setPollActive(false); // Set poll as inactive
+  };
+
   return (
-    <div className='techers'> 
+    <div className='teacher'>
       <div className='main'>
         <Tag />
         <h2 className='h2'>Let's Get Started</h2>
-        <p className='p'>You’ll have the ability to create and manage polls, ask questions, and monitor your students' responses in real-time.</p>
-        
+        <p className='p'>
+          You’ll have the ability to create and manage polls, ask questions, and monitor your students' responses in real-time.
+        </p>
+
         {pollActive ? (
-          <LivePollResults
-            question={question}
-            options={options}
-            responses={responses}
-          />
+          <div>
+            <LivePollResults
+              question={question}
+              options={options}
+              responses={responses}
+            />
+            <button className='createC' onClick={resetPollCreation}>
+              + Ask Another Question
+            </button>
+          </div>
         ) : (
-          <div className='ques'> 
+          <div className='ques'>
             <h3>Enter your question</h3>
             <textarea
               className='textAree'
-              rows={2} // Set the textarea to have 2 rows
+              rows={2}
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
             />
@@ -108,7 +121,11 @@ function Teacher() {
         )}
       </div>
       <div className='askQ'>
-        <button className='createC' onClick={createPoll}>+ Ask Question</button>  
+        {!pollActive && (
+          <button className='createC' onClick={createPoll}>
+            + Ask Question
+          </button>
+        )}
       </div>
     </div>
   );
