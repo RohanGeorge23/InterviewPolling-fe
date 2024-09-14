@@ -1,0 +1,65 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.appcss {
+  background: #F2F2F2;
+  height: 100vh; 
+  width: auto; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.intspan{
+  background: linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%); /* Gradient background */
+  padding: 1rem;
+  border-radius: 23px;
+  color: #F2F2F2;
+  height: 13px;
+  font-weight: 780;
+  margin-bottom: 30px;
+  width: 100px;
+}
+.roles{
+  display: flex;
+  margin-top: 30px;
+  
+}
+.header{
+  margin: 2px;
+  margin-bottom: 4px;
+}
+.roleCard{
+  width: 200px;
+  height: 70px;
+  border: 1px solid rgb(170, 166, 166);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.roleCard:hover {
+  border: 2px solid rgb(80, 80, 194);
+}
+.roleCard.selected {
+  border: 2px solid rgb(80, 80, 194); /* Highlighted border for selected role */
+  box-shadow: 0 0 10px rgba(80, 80, 194, 0.5); /* Optional: add a shadow effect */
+}
+
+.bold{
+  font-weight: 900;
+}
+.welcome{
+  font-size: 43px;
+  
+}
+.continue{
+  background: linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%); /* Gradient background */
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  color: #F2F2F2;
+  font-weight: 700;
+}
