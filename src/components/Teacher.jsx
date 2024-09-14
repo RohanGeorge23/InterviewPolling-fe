@@ -25,6 +25,7 @@ function Teacher() {
 
     // Listen for a new poll being created
     socket.on('new-poll', (poll) => {
+      console.log('New poll created:', poll); // Debug log
       setQuestion(poll.question);
       setOptions(poll.options);
       setResponses({}); // Reset responses for the new poll
@@ -67,13 +68,10 @@ function Teacher() {
       <div className='main'>
         <Tag />
         <h2 className='h2'>Let's Get Started</h2>
-        <p className='p'>you’ll have the ability to create and 
-            manage polls, ask questions,
-            and monitor your students'
-            responses in real-time.
-        </p>
+        <p className='p'>You’ll have the ability to create and manage polls, ask questions, and monitor your students' responses in real-time.</p>
+        
         {pollActive ? (
-            <LivePollResults
+          <LivePollResults
             question={question}
             options={options}
             responses={responses}
@@ -105,14 +103,14 @@ function Teacher() {
                 <button className='delete-option' onClick={() => deleteOption(index)}>Delete</button>
               </div>
             ))}
-            <button className='addoption' onClick={addOption}>+Add Option</button> {/* Button to add more options */}
+            <button className='addoption' onClick={addOption}>+ Add Option</button>
           </div>
         )}
       </div>
       <div className='askQ'>
-          <button className='createC' onClick={createPoll}>+ Ask Question</button>  
+        <button className='createC' onClick={createPoll}>+ Ask Question</button>  
       </div>
-     </div>
+    </div>
   );
 }
 
