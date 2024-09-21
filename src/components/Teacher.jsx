@@ -4,7 +4,7 @@ import LivePollResults from './LivePollResults';
 import Tag from './Tag';
 import './teacher.css';
 
-const socket = io('http://localhost:3000');
+const socket = io('https://live-interview-portal-be.onrender.com');
 
 function Teacher() {
   const [question, setQuestion] = useState('');
@@ -38,7 +38,7 @@ function Teacher() {
 
   const createPoll = () => {
     if (question && options.every((opt) => opt)) {
-      fetch('http://localhost:3000/create-poll', {
+      fetch('https://live-interview-portal-be.onrender.com/create-poll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question, options }),

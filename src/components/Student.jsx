@@ -4,7 +4,7 @@ import Tag from './Tag';
 import './student.css';
 import LivePollResults from './LivePollResults';
 
-const socket = io('http://localhost:3000'); 
+const socket = io('https://live-interview-portal-be.onrender.com'); 
 
 function Student() {
   const [name, setName] = useState('');
